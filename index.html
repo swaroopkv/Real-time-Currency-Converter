@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<title>Currency Converter</title>
+
+	<!--  -->
+
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+
+<body onload = "convertCurrency();">
+    
+	<div class="container">
+	<div id="box">
+	    <h2>Currency Converter <img src="https://images-na.ssl-images-amazon.com/images/I/510WmeXkLXL._SY355_.png" alt="" height="40px" width="40px" class="img-rounded"  border-radius="20px"></h2>
+	    <table id="t1">
+        <tr>
+	        <td>
+	            <input type="text" id="fromAmount" size="15" value="1" onkeyup="convertCurrency();">
+            
+	        <select id="from" onchange="convertCurrency();">
+	            <option value="AUD">AUSTRALIA(AUD)</option>
+	            <option value="EUR">AUSTRIA(EUR)</option>
+	            <option value="ETB">ETHIOPIA(ETB)</option>
+	            <option value="INR" >INDIA(INR)</option>
+	            <option value="IQD">IRAQ(IQD)</option>
+	            <option value="JPY">JAPAN(JPY)</option>
+	            <option value="KRW">KOREA(THE REPUBLIC OF)(KRW)</option>
+	            <option value="KWD">KUWAIT(KWD)</option>
+	            <option value="MYR">MALAYSIA(MYR)</option>
+	            <option value="MUR">MAURITIUS(MUR)</option>
+	            <option value="NPR">NEPAL(NPR)</option>
+	            <option value="NZD">NEW ZEALAND(NZD)</option>
+	            <option value="PKR">PAKISTAN(PKR)</option>
+	            <option value="SGD">SINGAPORE(SGD)</option>
+	            <option value="ZAR">SOUTH AFRICA(ZAR)</option>
+	            <option value="LKR">SRI LANKA(LKR)</option>
+	            <option value="AED">UNITED ARAB EMIRATES (AED)</option>
+	            <option value="USD" selected>UNITED STATES OF AMERICA (USD)</option>
+	            </select>
+            </td>
+            
+	    </tr>
+	    
+	    <tr>
+	        <td>
+	            <input type="text" id="toAmount" size="15" >
+            
+	        <select id="to" onchange="convertCurrency();">
+	            <option value="AUD">AUSTRALIA(AUD)</option>
+	            <option value="EUR">AUSTRIA(EUR)</option>
+	            <option value="ETB">ETHIOPIA(ETB)</option>
+	            <option value="INR" selected>INDIA(INR)</option>
+	            <option value="IQD">IRAQ(IQD)</option>
+	            <option value="JPY">JAPAN(JPY)</option>
+	            <option value="KRW">KOREA(THE REPUBLIC OF)(KRW)</option>
+	            <option value="KWD">KUWAIT(KWD)</option>
+	            <option value="MYR">MALAYSIA(MYR)</option>
+	            <option value="MUR">MAURITIUS(MUR)</option>
+	            <option value="NPR">NEPAL(NPR)</option>
+	            <option value="NZD">NEW ZEALAND(NZD)</option>
+	            <option value="PKR">PAKISTAN(PKR)</option>
+	            <option value="SGD">SINGAPORE(SGD)</option>
+	            <option value="ZAR">SOUTH AFRICA(ZAR)</option>
+	            <option value="LKR">SRI LANKA(LKR)</option>
+	            <option value="AED">UNITED ARAB EMIRATES (AED)</option>
+	            <option value="USD" >UNITED STATES OF AMERICA (USD)</option>
+	            
+	        </select>
+            </td>
+	    </tr>
+        </table>
+        
+	</div>
+
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<script>
+        function convertCurrency()
+        {
+            var from = document.getElementById("from").value;
+            var to = document.getElementById("to").value;
+            var xmlhttp = new XMLHttpRequest();
+            var url = "http://data.fixer.io/api/latest?access_key=ba327dfa455a687eec2751b6a013e23f&symbols="+from+","+to;
+            xmlhttp.open("GET",url,true);
+            xmlhttp.send();
+            xmlhttp.onreadystatechange = function(){
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        var result=xmlhttp.responseText;
+                        var jsResult=JSON.parse(result);
+                        var oneUnit = jsResult.rates[to]/jsResult.rates[from];
+                        var amt = document.getElementById("fromAmount").value;
+                        document.getElementById("toAmount").value=(oneUnit*amt).toFixed(2);
+                        
+                    }
+            }
+        }
+        
+    </script>
+
+</body>
+
+</html>
